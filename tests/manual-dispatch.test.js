@@ -25,7 +25,8 @@ const coreMock = {
     getBooleanInput: jest.fn((name) => false),
     setFailed: jest.fn(),
     info: jest.fn(),
-    warning: jest.fn()
+    warning: jest.fn(),
+    error: jest.fn()
 };
 
 const githubMock = {
@@ -47,7 +48,14 @@ jest.unstable_mockModule('@actions/core', () => ({
 }));
 
 jest.unstable_mockModule('@actions/github', () => ({
-    default: githubMock
+    context: githubMock.context
+}));
+
+jest.unstable_mockModule('axios', () => ({
+    default: {
+        post: jest.fn().mockResolvedValue({ status: 200 }),
+        isAxiosError: jest.fn().mockReturnValue(false)
+    }
 }));
 
 jest.unstable_mockModule('node-fetch', () => ({

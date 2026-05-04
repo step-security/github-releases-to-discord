@@ -1,5 +1,5 @@
 import core from '@actions/core';
-import github from '@actions/github';
+import { context } from '@actions/github';
 import fetch from 'node-fetch';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
@@ -53,7 +53,19 @@ const removeCarriageReturn = (text) => text.replace(/\r/g, '');
  * @param {string} text The input text.
  * @returns {string} The text without HTML comments.
  */
-const removeHTMLComments = (text) => text.replace(/<!--.*?-->/gs, '');
+const removeHTMLComments = (text) => {
+    let result = '';
+    let i = 0;
+    while (i < text.length) {
+        const start = text.indexOf('<!--', i);
+        if (start === -1) { result += text.slice(i); break; }
+        result += text.slice(i, start);
+        const end = text.indexOf('-->', start + 4);
+        if (end === -1) { result += text.slice(start); break; }
+        i = end + 3;
+    }
+    return result;
+};
 
 /**
  * Reduces redundant newlines and spaces.
@@ -187,7 +199,7 @@ const getMaxDescription = () => {
  * @returns {object} The context with release details.
  */
 const getContext = () => {
-    return resolveReleaseContext(github.context.payload.release, {
+    return resolveReleaseContext(context.payload.release, {
         body: core.getInput('release_body'),
         name: core.getInput('release_name'),
         html_url: core.getInput('release_html_url')
@@ -234,7 +246,7 @@ const limitString = (str, maxLength, url, clipAtLine = false) => {
     maxLength -= replacement.length;
     str = str.substring(0, maxLength);
 
-    const lastNewline = str.search(new RegExp(`[^${clipAtLine ? '\n' : '\s'}]*$`));
+    const lastNewline = str.search(new RegExp(`[^${clipAtLine ? '\\n' : '\\s'}]*$`));
     if (lastNewline > -1) {
         str = str.substring(0, lastNewline);
     }
