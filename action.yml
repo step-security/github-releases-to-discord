@@ -53,7 +53,7 @@ inputs:
     default: 'false'
 runs:
   using: 'node24'
-  main: 'index.js'
+  main: 'dist/index.js'
 branding:
   icon: file-text
   color: blue
