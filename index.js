@@ -54,12 +54,16 @@ const removeCarriageReturn = (text) => text.replace(/\r/g, '');
  * @returns {string} The text without HTML comments.
  */
 const removeHTMLComments = (text) => {
-    let result = text;
-    let prev;
-    do {
-        prev = result;
-        result = prev.replace(/<!--.*?-->/gs, '');
-    } while (result !== prev);
+    let result = '';
+    let i = 0;
+    while (i < text.length) {
+        const start = text.indexOf('<!--', i);
+        if (start === -1) { result += text.slice(i); break; }
+        result += text.slice(i, start);
+        const end = text.indexOf('-->', start + 4);
+        if (end === -1) { result += text.slice(start); break; }
+        i = end + 3;
+    }
     return result;
 };
 
