@@ -1,0 +1,59 @@
+name: Github Releases To Discord
+author: step-security
+description: Automatically send a stylized Discord webhook of a GitHub Release description to a specified Discord channel.
+inputs:
+  webhook_url:
+    description: Discord's webhook url. Use GH repo secrets.
+    required: true
+  color:
+    description: Decimal color value for embed.
+    required: false
+    default: '2105893'
+  username:
+    description: String username for webhook.
+    required: false
+  avatar_url:
+    description: String url to webhook avatar picture.
+    required: false
+  custom_html_url:
+    description: If filled, replaces github's release url with your custom html url.
+    required: false
+  content:
+    description: String content for webhook.
+    required: false
+  release_name:
+    description: Optional release title used when manually triggering the workflow with workflow_dispatch.
+    required: false
+  release_body:
+    description: Optional release body used when manually triggering the workflow with workflow_dispatch.
+    required: false
+  release_html_url:
+    description: Optional release URL used when manually triggering the workflow with workflow_dispatch.
+    required: false
+  footer_title:
+    description: Title for the footer.
+    required: false
+  footer_icon_url:
+    description: Icon url for the footer.
+    required: false
+  footer_timestamp:
+    description: Timestamp for the footer.
+    required: false
+  max_description:
+    description: Max length for the description.
+    required: false
+    default: '4096'
+  remove_github_reference_links:
+    description: Remove any PR, commit, and issue links from the description.
+    required: false
+    default: 'false'
+  reduce_headings:
+    description: Converts H3 to bold, h2 to bold & underline.
+    required: false
+    default: 'false'
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
+branding:
+  icon: file-text
+  color: blue

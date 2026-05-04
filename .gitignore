@@ -1,0 +1,12 @@
+.idea/
+*.iml
+out
+gen
+.env
+release.json
+repository.json
+user.json
+tests/sample-test-release-v2.json
+tests/sample-test-release-v3.json
+tests/sample-test-release-null-body.json
+node_modules/

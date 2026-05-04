@@ -1,0 +1,42 @@
+{
+  "name": "github-releases-to-discord",
+  "version": "1.20.0",
+  "description": "A GitHub Action that automatically sends a stylized Discord webhook of a GitHub Release description to a specified Discord channel.",
+  "type": "module",
+  "main": "index.js",
+  "keywords": [
+    "discord",
+    "github",
+    "release",
+    "action",
+    "release-to-discord",
+    "github-release-to-discord",
+    "webhook",
+    "github-action",
+    "changelog"
+  ],
+  "author": "step-security",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/step-security/github-releases-to-discord.git"
+  },
+  "bugs": {
+    "url": "https://github.com/step-security/github-releases-to-discord/issues"
+  },
+  "homepage": "https://github.com/step-security/github-releases-to-discord#readme",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.1",
+    "axios": "^1.15.2",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.3",
+    "jest": "^30.0.0"
+  },
+  "scripts": {
+    "build": "ncc build index.js -o dist --license licenses.txt",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  }
+}
