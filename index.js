@@ -1,5 +1,5 @@
 import core from '@actions/core';
-import github from '@actions/github';
+import { context } from '@actions/github';
 import fetch from 'node-fetch';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
@@ -187,7 +187,7 @@ const getMaxDescription = () => {
  * @returns {object} The context with release details.
  */
 const getContext = () => {
-    return resolveReleaseContext(github.context.payload.release, {
+    return resolveReleaseContext(context.payload.release, {
         body: core.getInput('release_body'),
         name: core.getInput('release_name'),
         html_url: core.getInput('release_html_url')
