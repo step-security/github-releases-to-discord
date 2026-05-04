@@ -53,7 +53,15 @@ const removeCarriageReturn = (text) => text.replace(/\r/g, '');
  * @param {string} text The input text.
  * @returns {string} The text without HTML comments.
  */
-const removeHTMLComments = (text) => text.replace(/<!--.*?-->/gs, '');
+const removeHTMLComments = (text) => {
+    let result = text;
+    let prev;
+    do {
+        prev = result;
+        result = prev.replace(/<!--.*?-->/gs, '');
+    } while (result !== prev);
+    return result;
+};
 
 /**
  * Reduces redundant newlines and spaces.
@@ -234,7 +242,7 @@ const limitString = (str, maxLength, url, clipAtLine = false) => {
     maxLength -= replacement.length;
     str = str.substring(0, maxLength);
 
-    const lastNewline = str.search(new RegExp(`[^${clipAtLine ? '\n' : '\s'}]*$`));
+    const lastNewline = str.search(new RegExp(`[^${clipAtLine ? '\\n' : '\\s'}]*$`));
     if (lastNewline > -1) {
         str = str.substring(0, lastNewline);
     }
